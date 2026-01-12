@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/ja-relief/browser",
+    "public": "dist/ja_relief",
     "ignore": [
       "firebase.json",
       "**/.*",
