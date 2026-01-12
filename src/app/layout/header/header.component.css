@@ -1,0 +1,281 @@
+/* ===== MOBILE-FIRST BASE (PHONE FIRST!) ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+    /* Prevent font scaling on iOS */
+}
+
+/* ===== HEADER - MOBILE FIRST (PHONE) ===== */
+.header {
+    display: flex;
+    flex-direction: column;
+    /* Stack on mobile */
+    align-items: center;
+    padding: 1rem;
+    color: white;
+    background-image: linear-gradient(135deg, #000000, #059605, #FFD700);
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Logo/Title */
+.header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    /* Mobile size */
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 0;
+    width: 100%;
+    /* Full width on mobile */
+    order: 2;
+    /* Comes after nav on mobile */
+}
+
+.header h1:focus {
+    outline: 2px dashed white;
+    outline-offset: 4px;
+}
+
+/* ===== NAVIGATION - MOBILE OPTIMIZED ===== */
+.header nav {
+    display: flex;
+    flex-direction: column;
+    /* Stack vertically */
+    width: 100%;
+    /* Full width on mobile */
+    gap: 0.5rem;
+    /* Space between links */
+    order: 1;
+    /* Comes first on mobile */
+    margin-bottom: 0.5rem;
+}
+
+.header nav a {
+    display: block;
+    /* Full-width click area */
+    color: #000;
+    font-size: 1.1rem;
+    /* Readable on mobile */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 1rem;
+    /* Large touch target (44px min) */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    /* Rounded corners */
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Active/Hover states for mobile */
+.header nav a:hover {
+    background-color: #FFD700;
+    /* Gold/yellow */
+    color: #000;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    outline: none;
+    border: 3px dotted #f9f5f5;
+    transform: translateY(-2px);
+    /* Slight lift */
+    box-shadow: 2px 6px 9x rgba(0, 0, 0, 0.3);
+}
+
+.header nav a:active {
+    transform: translateY(0);
+    /* Press effect */
+}
+
+/* Active route indicator */
+.header nav a.router-link-active {
+
+    color: white;
+    position: relative;
+}
+
+.header nav a.router-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+}
+
+/* ===== HAMBURGER MENU FOR MOBILE (Optional) ===== */
+.menu-toggle {
+    display: none;
+    /* Hidden by default */
+    background: none;
+    border: 2px solid white;
+    color: white;
+    font-size: 1.8rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    order: 0;
+    min-height: 44px;
+    /* Touch-friendly */
+    min-width: 44px;
+}
+
+/* ===== TABLET (768px and up) ===== */
+@media (min-width: 768px) {
+    .header {
+        flex-direction: row;
+        /* Horizontal layout */
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        align-items: center;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+        text-align: left;
+        width: auto;
+        /* Auto width on tablet */
+        order: 1;
+        /* First item */
+        flex: 0 0 auto;
+        margin-right: 2rem;
+    }
+
+    .header nav {
+        flex-direction: row;
+        /* Horizontal links */
+        width: auto;
+        order: 2;
+        margin-bottom: 0;
+        gap: 0.75rem;
+        background: none;
+    }
+
+    .header nav a {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        min-width: 120px;
+        /* Consistent button sizes */
+        text-align: center;
+    }
+
+    /* Hide menu toggle on tablet/desktop */
+    .menu-toggle {
+        display: none !important;
+    }
+}
+
+/* ===== DESKTOP (1024px and up) ===== */
+@media (min-width: 1024px) {
+    .header {
+        padding: 1.25rem 3rem;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header nav a {
+        padding: 0.875rem 1.5rem;
+        font-size: 1.1rem;
+        min-width: 140px;
+        margin: 0 0.25rem;
+    }
+
+    .header nav a:hover {
+        background-color: #07711c;
+        color: white;
+    }
+}
+
+/* ===== LARGE DESKTOP (1200px and up) ===== */
+@media (min-width: 1200px) {
+    .header {
+        padding: 1.5rem 4rem;
+    }
+
+    .header h1 {
+        font-size: 2.8rem;
+    }
+
+    .header nav {
+        gap: 1.5rem;
+    }
+
+    .header nav a {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* ===== UTILITY FOR MAIN CONTENT ===== */
+.container {
+    width: 100%;
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1000px;
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* ===== RESPONSIVE IMAGES ===== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+/* ===== TOUCH FRIENDLY EVERYWHERE ===== */
+button,
+a[role="button"],
+.header nav a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}

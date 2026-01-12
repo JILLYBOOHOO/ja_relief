@@ -1,0 +1,158 @@
+<form class="register-form" [formGroup]="survivorForm" (ngSubmit)="submit()">
+
+    <div class="form-group">
+        <label for="fullName">Full Name *</label>
+        <input id="fullName" type="text" formControlName="fullName" autocomplete="name"
+            placeholder="Enter your full name" />
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Contact Number 10 digits *</label>
+        <input id="phone" type="tel" formControlName="contact" autocomplete="tel"
+            placeholder="Enter your contact number" />
+    </div>
+
+    <div class="form-group">
+        <label for="idType">ID Type *</label>
+        <select id="idType" formControlName="idType" autocomplete="off">
+            <option value="">Select ID Type</option>
+            <option>National ID</option>
+            <option>Passport</option>
+            <option>Driver’s License</option>
+            <option>TRN</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="idNumber">ID Number *</label>
+        <input id="idNumber" type="text" formControlName="idNumber" autocomplete="off"
+            placeholder="Enter your ID number" />
+    </div>
+
+
+
+
+
+
+
+
+<div class="form-group">
+  <label for="idScan">Scan your ID</label>
+  <input type="file" id="idScan" (change)="onFileSelected($event)" accept="image/*" />
+</div>
+
+<!-- Optional: show preview -->
+<div *ngIf="idPreview">
+  <p>Preview:</p>
+  <img [src]="idPreview" alt="ID Preview" style="max-width: 200px; max-height: 200px;" />
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- ✅ Checkbox INLINE with label -->
+    <div class="form-checkbox">
+        <input type="checkbox" id="docsDestroyed" formControlName="provisional" />
+        <label for="docsDestroyed">
+            Id destroyed – provisional  limited access
+        </label>
+    </div>
+
+    <div *ngIf="!survivorForm.get('provisional')?.value">
+        <!-- ID TYPE + ID NUMBER + SCAN BUTTON HERE -->
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="parish">Parish*</label>
+        <select id="parish" formControlName="parish">
+            <option value="">--Select Parish--</option>
+            <option *ngFor="let p of parishesList" [value]="p">{{ p }}</option>
+        </select>
+        <div class="error" *ngIf="survivorForm.get('parish')?.invalid && survivorForm.get('parish')?.touched">
+            Please select a parish
+        </div>
+
+    </div>
+        <div class="form-group">
+            <label for="address">Address *</label>
+            <input id="address" type="text" formControlName="address" autocomplete="off"
+                placeholder="Enter your address" />
+
+
+
+
+
+        </div>
+
+
+
+<div class="form-group">
+  <label for="dob">Date of Birth*</label>
+  <input id="dob" type="date" formControlName="dob" [max]="today" />
+  <div class="error" *ngIf="survivorForm.get('dob')?.invalid && survivorForm.get('dob')?.touched">
+    Please enter a valid date of birth
+  </div>
+</div>
+
+
+
+<div *ngIf="!survivorForm.get('provisional')?.value">
+  <div class="form-group">
+    <label for="idScan">Scan / Upload ID</label>
+    <input type="file" id="idScan" (change)="onFileSelected($event)" accept="image/*" capture="environment">
+    <div *ngIf="idPreview">
+      <p>Preview:</p>
+      <img [src]="idPreview" alt="ID Preview" style="max-width: 200px; border: 1px solid #ccc;">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ✅ Radio buttons INLINE -->
+        <fieldset class="form-group">
+            <legend>Damage Level *</legend>
+            <div class="radio-group">
+                <label><input type="radio" value="Low" formControlName="damageLevel" /> Low</label>
+                <label><input type="radio" value="Medium" formControlName="damageLevel" /> Medium</label>
+                <label><input type="radio" value="High" formControlName="damageLevel" /> High</label>
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            <label for="password">Create Password *</label>
+            <input id="password" type="password" formControlName="password" autocomplete="new-password"
+                placeholder="Create a secure password" />
+            <small>At least 8 characters</small>
+        </div>
+
+
+        <!-- your inputs here -->
+        <div class="form-group">
+            <button type="submit" class="submit-btn">Register</button>
+        </div>
+  </form>
+  

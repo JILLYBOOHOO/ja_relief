@@ -1,0 +1,95 @@
+.home {
+    text-align: center;
+    padding: 2rem;
+}
+
+.actions {
+    margin-top: 2rem;
+}
+
+/* =========================
+   Global Button Base
+========================= */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    margin: 1rem;
+    border-radius: 30px;
+    font-size: 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* =========================
+   Primary & Secondary Buttons
+========================= */
+.btn.primary {
+    background-color: #ccff00;
+    color: #0f0e0e;
+}
+
+.btn.secondary {
+    background-color: #060606f0;
+    color: white;
+}
+
+
+
+/* Glass button variants */
+.glass-help {
+    background: linear-gradient(135deg,
+            rgba(0, 123, 255, 0.25),
+            rgba(0, 123, 255, 0.1));
+}
+
+.glass-donate {
+    background: linear-gradient(135deg,
+            rgba(40, 167, 69, 0.3),
+            rgba(40, 167, 69, 0.12));
+}
+
+/* =========================
+   Hover Effects
+========================= */
+.btn.primary:hover {
+    background-color: #1d1d1c;
+    color: #f9f4f4;
+
+}
+
+.btn.secondary:hover {
+    background-color: #1eda3a;
+    color: #130101;
+    transform: translateY(-2px);
+}
+
+.info-button {
+    background-color: #1eda3a;
+    color: #130101;
+
+}
+
+.info-btn:hover {
+    background-color: #130101;
+    color: #1eda3a;
+    transform: translateY(-5px);
+}
+
+.glass-btn:hover {
+    background-color: #0f0e0e;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   Focus States (Accessibility)
+========================= */
+.btn:focus,
+.glass-btn:focus {
+    outline: 3px solid #ffcc00;
+    outline-offset: 3px;
+}
