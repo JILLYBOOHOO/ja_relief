@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/ja_relief",
+    "public": "dist/ja-relief",
     "ignore": [
       "firebase.json",
       "**/.*",
