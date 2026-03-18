@@ -30,7 +30,10 @@ body {
 .btn {
     padding: 14px 28px;
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    /* Unified font size */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Unified font family */
     font-weight: 600;
     border: none;
     cursor: pointer;

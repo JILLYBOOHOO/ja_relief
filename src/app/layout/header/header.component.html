@@ -2,26 +2,33 @@
     <h1>Welcome to JA RELIEF</h1>
 
     <nav>
-        <a routerLink="/" aria-label="Go to Home Page">Home</a>
-        <a routerLink="/wifi-access" aria-label="Access Wi-Fi Vouchers">Get WiFi</a>
-        <a routerLink="/donate" aria-label="Donate to JA Relief">Donate</a>
+        <a routerLink="/" aria-label="Go to Home Page"><img src="assets/cirlce.ja.png" class="btn-icon" alt="">Home</a>
+        <a routerLink="/wifi-access" aria-label="Access Wi-Fi Vouchers"><img src="assets/cirlce.ja.png" class="btn-icon"
+                alt="">Get WiFi</a>
+        <a routerLink="/donate" aria-label="Donate to JA Relief"><img src="assets/cirlce.ja.png" class="btn-icon"
+                alt="">Donate</a>
 
         <!-- Show Dashboard & Logout when logged in -->
         <ng-container *ngIf="authService.currentUser$ | async; else notLoggedIn">
-            <a routerLink="/dashboard" aria-label="Go to Dashboard">Dashboard</a>
-            <a (click)="logout()" style="cursor: pointer;" aria-label="Logout from account">Logout</a>
+            <a routerLink="/dashboard" aria-label="Go to Dashboard"><img src="assets/cirlce.ja.png" class="btn-icon"
+                    alt="">Dashboard</a>
+            <a (click)="logout()" style="cursor: pointer;" aria-label="Logout from account"><img
+                    src="assets/cirlce.ja.png" class="btn-icon" alt="">Logout</a>
         </ng-container>
 
         <!-- Show Login when NOT logged in -->
         <ng-template #notLoggedIn>
-            <a routerLink="/login" aria-label="Login to your account">Login</a>
-            <a routerLink="/login" class="admin-login-link" aria-label="Admin Login">Admin Login</a>
+            <a routerLink="/login" aria-label="Login to your account"><img src="assets/cirlce.ja.png" class="btn-icon"
+                    alt="">Login</a>
+            <a routerLink="/login" class="admin-login-link" aria-label="Admin Login"><img src="assets/cirlce.ja.png"
+                    class="btn-icon" alt="">Admin Login</a>
         </ng-template>
 
         <div class="toggle-group">
             <button (click)="toggleVoice()" class="theme-toggle-btn" [class.active]="isListening"
                 [attr.aria-label]="isListening ? 'Stop voice navigation' : 'Start voice navigation'"
                 [title]="isListening ? 'Stop Voice Commands' : 'Start Voice Commands'">
+                <img src="assets/cirlce.ja.png" class="btn-icon toggle-icon" alt="">
                 <!-- Mic icon -->
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
@@ -33,6 +40,7 @@
 
             <button (click)="toggleDarkMode()" class="theme-toggle-btn" [attr.aria-pressed]="isDarkMode"
                 aria-label="Toggle Dark Mode" [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                <img src="assets/cirlce.ja.png" class="btn-icon toggle-icon" alt="">
                 <!-- Sun icon (light mode) -->
                 <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

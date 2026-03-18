@@ -15,6 +15,39 @@
             </button>
         </div>
 
+        <div class="donor-info-section top-donor-info">
+            <h3>Step 1: Your Information</h3>
+            <div class="form-grid">
+                <div class="form-field">
+                    <label for="donorName">Full Name</label>
+                    <input type="text" id="donorName" [(ngModel)]="donorName" placeholder="Your Name" />
+                </div>
+                <div class="form-field">
+                    <label for="donorPhone">Phone Number</label>
+                    <input type="tel" id="donorPhone" [(ngModel)]="donorPhone" placeholder="876-000-0000" />
+                </div>
+                <div class="form-field">
+                    <label for="donorEmail">Email Address</label>
+                    <input type="email" id="donorEmail" [(ngModel)]="donorEmail" placeholder="your@email.com" />
+                </div>
+                <!-- Only show drop-off date if NOT monetary -->
+                <div class="form-field" *ngIf="donationType !== 'monetary'">
+                    <label for="dropOffDate">Drop-off Date</label>
+                    <input type="date" id="dropOffDate" [(ngModel)]="dropOffDate" />
+                </div>
+            </div>
+            <!-- Only show center if NOT monetary -->
+            <div class="form-field full-width" *ngIf="donationType !== 'monetary'" style="margin-top: 15px;">
+                <label for="donationCenter">Select Donation Center</label>
+                <select id="donationCenter" [(ngModel)]="selectedCenter">
+                    <option value="" disabled selected>Choose a center...</option>
+                    <option *ngFor="let center of donationCenters" [value]="center.id">
+                        {{ center.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
         <!-- Impact Map Section -->
         <div class="donation-form impact-map-form" *ngIf="donationType === 'impact-map'">
             <h2>Impact Map</h2>
@@ -30,8 +63,12 @@
 
         <!-- Monetary Donation Form -->
         <div class="donation-form monetary-form" *ngIf="donationType === 'monetary'">
+            <div class="secure-gateway-badge">
+                <span class="lock-icon">🔒</span>
+                <span>SECURE PAYMENT GATEWAY</span>
+            </div>
             <h2>Monetary Donation</h2>
-            <p>Enter the amount you wish to contribute.</p>
+            <p>Your contribution supports immediate relief efforts. Enter the amount to proceed.</p>
 
             <div class="input-group">
                 <span class="currency-symbol">$</span>
@@ -53,41 +90,6 @@
             <div class="card-details-form" *ngIf="selectedPaymentMethod === 'card'">
                 <h3>Card Information</h3>
 
-                <!-- Virtual Card Display -->
-                <div class="card-container" [class.flipped]="isCardFlipped">
-                    <div class="card-inner">
-                        <!-- Front of Card -->
-                        <div class="card-front">
-                            <div class="card-chip"></div>
-                            <div class="card-logo">🇯🇲 JA RELIEF</div>
-                            <div class="card-number-display">
-                                {{ formattedCardNumber }}
-                            </div>
-                            <div class="card-info-row">
-                                <div class="card-holder">
-                                    <span class="label">Card Holder</span>
-                                    <span class="value">{{ cardName || 'YOUR NAME HERE' }}</span>
-                                </div>
-                                <div class="card-expires">
-                                    <span class="label">Expires</span>
-                                    <span class="value">{{ cardExpiry || 'MM/YY' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Back of Card -->
-                        <div class="card-back">
-                            <div class="card-magnetic-strip"></div>
-                            <div class="card-cvv-display">
-                                <span class="label">CVV</span>
-                                <div class="cvv-box">{{ cardCvv || '•••' }}</div>
-                            </div>
-                            <div class="card-back-text">
-                                This card is issued for disaster relief contributions to JA RELIEF.
-                                Thank you for your support.
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Card Form Inputs -->
                 <div class="card-input-wrapper">
@@ -98,7 +100,7 @@
                     <div class="form-field">
                         <label>Card Number</label>
                         <input type="text" [(ngModel)]="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19"
-                            autocomplete="off" />
+                            autocomplete="cc-number" data-lpignore="true" />
                     </div>
                     <div class="card-row">
                         <div class="form-field">
@@ -115,8 +117,24 @@
                 </div>
             </div>
 
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <span class="badge-icon">🛡️</span>
+                    <span class="badge-text">PCI Compliant</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="badge-icon">🔒</span>
+                    <span class="badge-text">256-bit SSL</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="badge-icon">💳</span>
+                    <span class="badge-text">Verified Secure</span>
+                </div>
+            </div>
+
+
             <button class="submit-btn" (click)="submitMonetary(amountInput.value); amountInput.value=''">
-                Proceed to Payment
+                Complete Secure Payment
             </button>
         </div>
 
@@ -163,36 +181,6 @@
                 </div>
             </div>
 
-            <div class="donor-info-section">
-                <h3>Donor Information</h3>
-                <div class="form-grid">
-                    <div class="form-field">
-                        <label for="donorName">Full Name</label>
-                        <input type="text" id="donorName" [(ngModel)]="donorName" placeholder="Your Name" />
-                    </div>
-                    <div class="form-field">
-                        <label for="donorPhone">Phone Number</label>
-                        <input type="tel" id="donorPhone" [(ngModel)]="donorPhone" placeholder="876-000-0000" />
-                    </div>
-                    <div class="form-field">
-                        <label for="donorEmail">Email Address</label>
-                        <input type="email" id="donorEmail" [(ngModel)]="donorEmail" placeholder="your@email.com" />
-                    </div>
-                    <div class="form-field">
-                        <label for="dropOffDate">Drop-off Date</label>
-                        <input type="date" id="dropOffDate" [(ngModel)]="dropOffDate" />
-                    </div>
-                </div>
-                <div class="form-field full-width">
-                    <label for="donationCenter">Select Donation Center</label>
-                    <select id="donationCenter" [(ngModel)]="selectedCenter">
-                        <option value="" disabled selected>Choose a center...</option>
-                        <option *ngFor="let center of donationCenters" [value]="center.id">
-                            {{ center.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
 
             <button class="submit-btn" (click)="submitInKind()">
                 Confirm Pledge
@@ -210,6 +198,10 @@
                 <p>Your generous donation of <strong>${{ donationAmount | number:'1.2-2' }}</strong> has been received.
                 </p>
                 <p>Payment Method: <strong>{{ selectedPaymentMethod | uppercase }}</strong></p>
+                <div class="drop-off-info" *ngIf="donorName">
+                    <p><strong>Donor:</strong> {{ donorName }}</p>
+                    <p><strong>Email:</strong> {{ donorEmail }}</p>
+                </div>
             </div>
 
             <div *ngIf="pledgedItems.length > 0" class="success-details">
@@ -229,36 +221,37 @@
             <button class="close-btn" (click)="closeModal()">Close</button>
         </div>
     </div>
+</div>
 
-    <!-- Fulfillment Modal -->
-    <div class="modal-overlay" *ngIf="showFulfillmentModal" (click)="closeFulfillment()">
-        <div class="modal-content fulfillment-modal" (click)="$event.stopPropagation()">
-            <button class="close-modal-btn" (click)="closeFulfillment()">&times;</button>
-            <h2>Fulfill Request</h2>
-            <div class="requester-info">
-                <span class="requester-name"><strong>Requester:</strong> {{ selectedRequest?.requesterName }}</span>
-                <span class="requester-location"><strong>Location:</strong> {{ selectedRequest?.location }}</span>
-            </div>
+<!-- Fulfillment Modal -->
+<div class="modal-overlay" *ngIf="showFulfillmentModal" (click)="closeFulfillment()">
+    <div class="modal-content fulfillment-modal" (click)="$event.stopPropagation()">
+        <button class="close-modal-btn" (click)="closeFulfillment()">&times;</button>
+        <h2>Fulfill Request</h2>
+        <div class="requester-info">
+            <span class="requester-name"><strong>Requester:</strong> {{ selectedRequest?.requesterName }}</span>
+            <span class="requester-location"><strong>Location:</strong> {{ selectedRequest?.location }}</span>
+        </div>
 
-            <div class="fulfillment-items">
-                <h3>Select items you can provide:</h3>
-                <div class="fulfillment-list">
-                    <div *ngFor="let item of selectedRequest?.items" class="fulfillment-item"
-                        [class.already-fulfilled]="item.status !== 'pending' && item.status !== 'partially-fulfilled'">
-                        <label class="item-checkbox-label">
-                            <input type="checkbox" [(ngModel)]="itemsToFulfill[item.name]"
-                                [disabled]="item.status !== 'pending' && item.status !== 'partially-fulfilled'" />
-                            <span class="item-name">{{ item.name }}</span>
-                        </label>
-                        <span class="item-status" [class]="item.status">{{ item.status }}</span>
-                    </div>
+        <div class="fulfillment-items">
+            <h3>Select items you can provide:</h3>
+            <div class="fulfillment-list">
+                <div *ngFor="let item of selectedRequest?.items" class="fulfillment-item"
+                    [class.already-fulfilled]="item.status !== 'pending' && item.status !== 'partially-fulfilled'">
+                    <label class="item-checkbox-label">
+                        <input type="checkbox" [(ngModel)]="itemsToFulfill[item.name]"
+                            [disabled]="item.status !== 'pending' && item.status !== 'partially-fulfilled'" />
+                        <span class="item-name">{{ item.name }}</span>
+                    </label>
+                    <span class="item-status" [class]="item.status">{{ item.status }}</span>
                 </div>
             </div>
+        </div>
 
-            <div class="modal-actions">
-                <button class="cancel-btn" (click)="closeFulfillment()">Cancel</button>
-                <button class="submit-btn" (click)="submitFulfillment()">Confirm Fulfillment</button>
-            </div>
+
+        <div class="modal-actions">
+            <button class="cancel-btn" (click)="closeFulfillment()">Cancel</button>
+            <button class="submit-btn" (click)="submitFulfillment()">Confirm Fulfillment</button>
         </div>
     </div>
 </div>

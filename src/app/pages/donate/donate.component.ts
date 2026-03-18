@@ -142,9 +142,7 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
   paymentMethods = [
     { id: 'card', name: 'Credit/Debit Card', icon: '💳' },
     { id: 'paypal', name: 'PayPal', icon: '🅿️' },
-    { id: 'gk', name: 'GK (GraceKennedy)', icon: '🏦' },
-    { id: 'lynk', name: 'Lynk', icon: '📱' },
-    { id: 'giftme', name: 'GiftMe', icon: '🎁' }
+    { id: 'lynk', name: 'Lynk', icon: '📱' }
   ];
 
   constructor(private impactRequestService: ImpactRequestService) { }
@@ -258,17 +256,10 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   pledgeRequestItem(request: ImpactRequest, item: RequestItem) {
-    const updatedRequest = { ...request };
-    updatedRequest.items = updatedRequest.items.map(i => {
-      if (i.name === item.name) {
-        return { ...i, status: 'fulfilled' as const };
-      }
-      return i;
-    });
-
-    this.impactRequestService.updateRequest(updatedRequest);
-    this.pledgedItems = [`${item.name} for ${request.requesterName}`];
-    this.showSuccessModal = true;
+    this.selectedRequest = request;
+    this.itemsToFulfill = {};
+    this.itemsToFulfill[item.name] = true;
+    this.showFulfillmentModal = true;
   }
 
   submitFulfillment() {
@@ -278,6 +269,11 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (selectedItemNames.length === 0) {
       alert('Please select at least one item to fulfill.');
+      return;
+    }
+
+    if (!this.donorName || !this.donorPhone || !this.dropOffDate || !this.selectedCenter) {
+      alert('Please complete your information and drop-off details.');
       return;
     }
 
@@ -294,7 +290,8 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.impactRequestService.updateRequest(updatedRequest);
 
-    alert('Thank you for your generous contribution! The items have been pledged and we will coordinate delivery.');
+    this.pledgedItems = selectedItemNames.map(name => `${name} for ${this.selectedRequest?.requesterName}`);
+    this.showSuccessModal = true;
     this.closeFulfillment();
 
     // Simulate drop-off to transition to 'received' status after a delay

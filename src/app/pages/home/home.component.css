@@ -82,6 +82,8 @@
     gap: 0.75rem;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    /* Added to handle overflow on small screens */
 }
 
 /* =========================
@@ -104,7 +106,6 @@
     /* Green */
     color: #000000;
     padding: 16px 40px;
-    font-size: 1.8rem;
     box-shadow: 0 4px 15px rgba(30, 218, 58, 0.4);
     border: 2px solid transparent;
 }
@@ -119,7 +120,6 @@
     background-color: #f9fd03;
     /* Yellow */
     color: #000000;
-    font-size: 1.6rem;
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(5px);
 }
@@ -128,7 +128,6 @@
     background-color: #ffffff;
     /* White */
     color: #000000;
-    font-size: 1.6rem;
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(5px);
 }
@@ -143,7 +142,6 @@
     background-color: #ffffff;
     /* White (keeping within palette) */
     color: #000000;
-    font-size: 1.6rem;
     padding: 12px 32px;
     border: 1px solid #000000;
 }
@@ -230,17 +228,34 @@
     }
 
     .hero-overlay p {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        /* Reduced to fit mobile */
+        margin-bottom: 1.5rem;
     }
 
     .hero-overlay {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1.5rem 1rem;
+        /* Reduced padding to prevent clipping */
         margin-top: 5rem;
-        /* Space for the stacked header */
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        /* Ensure long words wrap */
     }
 
     .wifi-primary {
-        font-size: 1.8rem;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .btn-row {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .btn-7 {
+        width: 100%;
+        max-width: 280px;
     }
 }
 
@@ -286,92 +301,6 @@
         -4px -4px 5px 0px rgba(255, 255, 255, .9),
         7px 7px 20px 0px rgba(0, 0, 0, .2),
         4px 4px 5px 0px rgba(0, 0, 0, .3);
-
-    .btn-7 {
-        background: linear-gradient(0deg, rgba(5, 143, 5, 0.76) 0%, rgb(5, 238, 43) 100%);
-        line-height: 42px;
-        padding: 0;
-        border: none;
-    }
-
-    .btn-7 span {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    .btn-7:before,
-    .btn-7:after {
-        position: absolute;
-        content: "";
-        right: 0;
-        bottom: 0;
-        background: rgb(2, 251, 23);
-        box-shadow:
-            -7px -7px 20px 0px rgba(255, 255, 255, .9),
-            -4px -4px 5px 0px rgba(255, 255, 255, .9),
-            7px 7px 20px 0px rgba(0, 0, 0, .2),
-            4px 4px 5px 0px rgba(0, 0, 0, .3);
-        transition: all 0.3s ease;
-    }
-
-    .btn-7:before {
-        height: 0%;
-        width: 2px;
-    }
-
-    .btn-7:after {
-        width: 0%;
-        height: 2px;
-    }
-
-    .btn-7:hover {
-        color: rgb(9, 243, 99);
-        background: transparent;
-    }
-
-    .btn-7:hover:before {
-        height: 100%;
-    }
-
-    .btn-7:hover:after {
-        width: 100%;
-    }
-
-    .btn-7 span:before,
-    .btn-7 span:after {
-        position: absolute;
-        content: "";
-        left: 0;
-        top: 0;
-        background: rgb(34, 238, 7);
-        box-shadow:
-            -7px -7px 20px 0px rgba(255, 255, 255, .9),
-            -4px -4px 5px 0px rgba(255, 255, 255, .9),
-            7px 7px 20px 0px rgba(0, 0, 0, .2),
-            4px 4px 5px 0px rgba(0, 0, 0, .3);
-        transition: all 0.3s ease;
-    }
-
-    .btn-7 span:before {
-        width: 2px;
-        height: 0%;
-    }
-
-    .btn-7 span:after {
-        height: 2px;
-        width: 0%;
-    }
-
-    .btn-7 span:hover:before {
-        height: 100%;
-    }
-
-    .btn-7 span:hover:after {
-        width: 100%;
-    }
-
     transition: all 0.3s ease;
 }
 
@@ -383,11 +312,6 @@
 .btn-7:after {
     width: 0%;
     height: 2px;
-}
-
-.btn-7:hover {
-    color: rgb(255, 239, 22);
-    background: transparent;
 }
 
 .btn-7:hover:before {
@@ -431,10 +355,12 @@
     width: 100%;
 }
 
-.admin-btn {
+.admin-btn,
+.admin-btn span {
     background-color: #000 !important;
-    color: #ffd700 !important;
-    font-size: 1.4rem;
+    background: linear-gradient(0deg, rgb(0, 255, 0) 0%, rgb(255, 251, 2) 100%) !important;
+    color: #000 !important;
+    /* Force black text */
     border: 1px solid #ffd700 !important;
     height: 46px;
     display: flex;
@@ -442,7 +368,8 @@
     justify-content: center;
 }
 
-.admin-btn:hover {
-    background-color: #ffd700 !important;
+.admin-btn:hover,
+.admin-btn:hover span {
+    background: #ffd700 !important;
     color: #000 !important;
 }

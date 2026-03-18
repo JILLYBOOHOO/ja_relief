@@ -70,7 +70,8 @@ body {
     display: block;
     /* Full-width click area */
     color: #000;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    /* Unified font size */
     /* Readable on mobile */
     font-family: Georgia, 'Times New Roman', Times, serif;
     padding: 1rem;
@@ -82,7 +83,8 @@ body {
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
-    border: 2px dashed #000 !important;
+    border: 2px solid #000 !important;
+    /* Changed dashed to solid, removed 'frame' look */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -219,7 +221,8 @@ body {
 
     .header nav a {
         padding: 0.75rem 1.25rem;
-        font-size: 1rem;
+        font-size: 1.2rem;
+        /* Unified font size */
         background-color: rgba(255, 255, 255, 0.9);
         min-width: 100px;
         /* Balanced button sizes */
@@ -244,7 +247,8 @@ body {
 
     .header nav a {
         padding: 0.875rem 1.5rem;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        /* Unified font size */
         min-width: 120px;
         margin: 0 0.25rem;
     }
@@ -332,12 +336,13 @@ a[role="button"],
 }
 
 .theme-toggle-btn {
-    width: 44px;
+    width: auto;
     height: 44px;
     min-width: 44px !important;
     min-height: 44px !important;
-    border-radius: 50%;
-    border: 2px dashed #000 !important;
+    border-radius: 50px;
+    border: 2px solid #000 !important;
+    /* Removed dashed border */
     background: #059605;
     /* Green for high visibility */
     color: #fff;
@@ -345,7 +350,7 @@ a[role="button"],
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 0 10px;
     transition: all 0.25s ease;
     flex-shrink: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -388,20 +393,40 @@ a[role="button"],
 }
 
 .admin-login-link {
-    background-color: #000 !important;
-    color: #ffd700 !important;
-    /* Gold text */
+    background: linear-gradient(0deg, rgb(0, 255, 0) 0%, rgb(255, 251, 2) 100%) !important;
+    color: #000 !important;
+    /* Black text */
     padding: 8px 16px !important;
-    border-radius: 4px;
+    border-radius: 50px !important;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.8rem;
-    border: 1px dashed #ffd700 !important;
+    font-size: 1.2rem !important;
+    /* Unified size */
+    border: 2px solid #000 !important;
+    /* Removed dashed */
     margin-left: 10px;
     text-decoration: none;
+    font-family: Georgia, serif !important;
 }
 
 .admin-login-link:hover {
     background-color: #333 !important;
     color: #fff !important;
+}
+
+/* Button Icon Styling */
+.btn-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* Specific styling for toggle button icons */
+.toggle-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
