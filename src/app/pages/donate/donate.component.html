@@ -1,0 +1,264 @@
+<div class="donate-page">
+    <div class="donate-container">
+        <h1>Make a Difference Today</h1>
+        <p class="subtitle">Support JA RELIEF in providing disaster assistance.</p>
+
+        <div class="donation-options">
+            <button [class.active]="donationType === 'impact-map'" (click)="setDonationType('impact-map')">
+                🗺️ Impact Map
+            </button>
+            <button [class.active]="donationType === 'monetary'" (click)="setDonationType('monetary')">
+                💰 Donate Monetary
+            </button>
+            <button [class.active]="donationType === 'in-kind'" (click)="setDonationType('in-kind')">
+                📦 Donate In Kind
+            </button>
+        </div>
+
+        <!-- Impact Map Section -->
+        <div class="donation-form impact-map-form" *ngIf="donationType === 'impact-map'">
+            <h2>Impact Map</h2>
+            <p>See where help is needed most across Jamaica. Click on a marker to fulfill a request.</p>
+
+            <div id="impact-map" class="map-container"></div>
+
+            <div class="map-info">
+                <p><small>* Markers indicate specific requests from survivors and volunteers in various
+                        parishes.</small></p>
+            </div>
+        </div>
+
+        <!-- Monetary Donation Form -->
+        <div class="donation-form monetary-form" *ngIf="donationType === 'monetary'">
+            <h2>Monetary Donation</h2>
+            <p>Enter the amount you wish to contribute.</p>
+
+            <div class="input-group">
+                <span class="currency-symbol">$</span>
+                <input type="number" min="1" placeholder="Amount" #amountInput />
+            </div>
+
+            <div class="payment-methods-section">
+                <h3>Select Payment Method</h3>
+                <div class="methods-grid">
+                    <button *ngFor="let method of paymentMethods" [class.selected]="selectedPaymentMethod === method.id"
+                        (click)="selectPaymentMethod(method.id)" class="method-btn">
+                        <span class="method-icon">{{ method.icon }}</span>
+                        <span class="method-name">{{ method.name }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Details Section (Shows only if 'card' is selected) -->
+            <div class="card-details-form" *ngIf="selectedPaymentMethod === 'card'">
+                <h3>Card Information</h3>
+
+                <!-- Virtual Card Display -->
+                <div class="card-container" [class.flipped]="isCardFlipped">
+                    <div class="card-inner">
+                        <!-- Front of Card -->
+                        <div class="card-front">
+                            <div class="card-chip"></div>
+                            <div class="card-logo">🇯🇲 JA RELIEF</div>
+                            <div class="card-number-display">
+                                {{ formattedCardNumber }}
+                            </div>
+                            <div class="card-info-row">
+                                <div class="card-holder">
+                                    <span class="label">Card Holder</span>
+                                    <span class="value">{{ cardName || 'YOUR NAME HERE' }}</span>
+                                </div>
+                                <div class="card-expires">
+                                    <span class="label">Expires</span>
+                                    <span class="value">{{ cardExpiry || 'MM/YY' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Back of Card -->
+                        <div class="card-back">
+                            <div class="card-magnetic-strip"></div>
+                            <div class="card-cvv-display">
+                                <span class="label">CVV</span>
+                                <div class="cvv-box">{{ cardCvv || '•••' }}</div>
+                            </div>
+                            <div class="card-back-text">
+                                This card is issued for disaster relief contributions to JA RELIEF.
+                                Thank you for your support.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Form Inputs -->
+                <div class="card-input-wrapper">
+                    <div class="form-field">
+                        <label>Cardholder Name</label>
+                        <input type="text" [(ngModel)]="cardName" placeholder="Full Name" autocomplete="off" />
+                    </div>
+                    <div class="form-field">
+                        <label>Card Number</label>
+                        <input type="text" [(ngModel)]="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19"
+                            autocomplete="off" />
+                    </div>
+                    <div class="card-row">
+                        <div class="form-field">
+                            <label>Expiry Date</label>
+                            <input type="text" [(ngModel)]="cardExpiry" placeholder="MM/YY" maxlength="5"
+                                autocomplete="off" />
+                        </div>
+                        <div class="form-field">
+                            <label>CVV</label>
+                            <input type="password" [(ngModel)]="cardCvv" placeholder="123" maxlength="4"
+                                (focus)="isCardFlipped = true" (blur)="isCardFlipped = false" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="submit-btn" (click)="submitMonetary(amountInput.value); amountInput.value=''">
+                Proceed to Payment
+            </button>
+        </div>
+
+        <!-- In-Kind Donation List -->
+        <div class="donation-form in-kind-form" *ngIf="donationType === 'in-kind'">
+            <div class="survivor-requests-section" *ngIf="activeSurvivorRequests.length > 0">
+                <h2>🚨 High Priority Survivor Requests</h2>
+                <p>These are specific items requested by people in need right now. Fulfilling these directly provides
+                    immediate relief.</p>
+                <div class="requests-grid">
+                    <div class="request-card" *ngFor="let req of activeSurvivorRequests">
+                        <div class="request-header">
+                            <span class="requester">{{ req.requesterName }}</span>
+                            <span class="location">📍 {{ req.location }}</span>
+                        </div>
+                        <div class="request-items">
+                            <ng-container *ngFor="let item of req.items">
+                                <div class="request-item"
+                                    *ngIf="item.status === 'pending' || item.status === 'partially-fulfilled'">
+                                    <span class="item-name">{{ item.name }}</span>
+                                    <span class="item-qty">Qty: {{ item.quantity }}</span>
+                                    <button class="pledge-btn" (click)="pledgeRequestItem(req, item)">Fulfill
+                                        This</button>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Donate In Kind</h2>
+            <p>Select the items you can provide from our current needs list:</p>
+
+            <div class="categorized-items">
+                <div class="category-group" *ngFor="let cat of categorizedItems">
+                    <h3><span class="category-icon">{{ cat.icon }}</span> {{ cat.category }}</h3>
+                    <div class="items-grid">
+                        <label class="item-checkbox" *ngFor="let item of cat.items">
+                            <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked" />
+                            <span class="item-icon">{{ item.icon }}</span>
+                            <span class="item-name">{{ item.name }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="donor-info-section">
+                <h3>Donor Information</h3>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="donorName">Full Name</label>
+                        <input type="text" id="donorName" [(ngModel)]="donorName" placeholder="Your Name" />
+                    </div>
+                    <div class="form-field">
+                        <label for="donorPhone">Phone Number</label>
+                        <input type="tel" id="donorPhone" [(ngModel)]="donorPhone" placeholder="876-000-0000" />
+                    </div>
+                    <div class="form-field">
+                        <label for="donorEmail">Email Address</label>
+                        <input type="email" id="donorEmail" [(ngModel)]="donorEmail" placeholder="your@email.com" />
+                    </div>
+                    <div class="form-field">
+                        <label for="dropOffDate">Drop-off Date</label>
+                        <input type="date" id="dropOffDate" [(ngModel)]="dropOffDate" />
+                    </div>
+                </div>
+                <div class="form-field full-width">
+                    <label for="donationCenter">Select Donation Center</label>
+                    <select id="donationCenter" [(ngModel)]="selectedCenter">
+                        <option value="" disabled selected>Choose a center...</option>
+                        <option *ngFor="let center of donationCenters" [value]="center.id">
+                            {{ center.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="submit-btn" (click)="submitInKind()">
+                Confirm Pledge
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" *ngIf="showSuccessModal" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="success-icon">🇯🇲</div>
+            <h2>Thank You!</h2>
+
+            <div *ngIf="donationAmount > 0" class="success-details">
+                <p>Your generous donation of <strong>${{ donationAmount | number:'1.2-2' }}</strong> has been received.
+                </p>
+                <p>Payment Method: <strong>{{ selectedPaymentMethod | uppercase }}</strong></p>
+            </div>
+
+            <div *ngIf="pledgedItems.length > 0" class="success-details">
+                <p>You have pledged to donate:</p>
+                <ul>
+                    <li *ngFor="let item of pledgedItems">{{ item }}</li>
+                </ul>
+                <div class="drop-off-info">
+                    <p><strong>Drop-off Date:</strong> {{ dropOffDate }}</p>
+                    <p><strong>Center:</strong> {{ selectedCenter | uppercase }}</p>
+                </div>
+                <p class="confirmation-msg">A confirmation email has been sent to <strong>{{ donorEmail }}</strong>.</p>
+            </div>
+
+            <p class="impact-msg">Your contribution helps us provide aid to those in need across Jamaica.</p>
+
+            <button class="close-btn" (click)="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Fulfillment Modal -->
+    <div class="modal-overlay" *ngIf="showFulfillmentModal" (click)="closeFulfillment()">
+        <div class="modal-content fulfillment-modal" (click)="$event.stopPropagation()">
+            <button class="close-modal-btn" (click)="closeFulfillment()">&times;</button>
+            <h2>Fulfill Request</h2>
+            <div class="requester-info">
+                <span class="requester-name"><strong>Requester:</strong> {{ selectedRequest?.requesterName }}</span>
+                <span class="requester-location"><strong>Location:</strong> {{ selectedRequest?.location }}</span>
+            </div>
+
+            <div class="fulfillment-items">
+                <h3>Select items you can provide:</h3>
+                <div class="fulfillment-list">
+                    <div *ngFor="let item of selectedRequest?.items" class="fulfillment-item"
+                        [class.already-fulfilled]="item.status !== 'pending' && item.status !== 'partially-fulfilled'">
+                        <label class="item-checkbox-label">
+                            <input type="checkbox" [(ngModel)]="itemsToFulfill[item.name]"
+                                [disabled]="item.status !== 'pending' && item.status !== 'partially-fulfilled'" />
+                            <span class="item-name">{{ item.name }}</span>
+                        </label>
+                        <span class="item-status" [class]="item.status">{{ item.status }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="cancel-btn" (click)="closeFulfillment()">Cancel</button>
+                <button class="submit-btn" (click)="submitFulfillment()">Confirm Fulfillment</button>
+            </div>
+        </div>
+    </div>
+</div>

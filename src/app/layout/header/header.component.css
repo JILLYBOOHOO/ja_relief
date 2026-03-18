@@ -1,0 +1,407 @@
+/* ===== MOBILE-FIRST BASE (PHONE FIRST!) ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+    /* Prevent font scaling on iOS */
+}
+
+/* ===== HEADER - MOBILE FIRST (PHONE) ===== */
+.header {
+    display: flex;
+    flex-direction: column;
+    /* Stack on mobile */
+    align-items: center;
+    padding: 1.5rem 1rem;
+    color: white;
+    background-image: linear-gradient(135deg, #000000, #059605, #FFD700);
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 100;
+}
+
+/* Logo/Title */
+.header h1 {
+    margin: 1.5rem 0 0.5rem 0;
+    font-size: 1.8rem;
+    /* Mobile size */
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    /* Full width on mobile */
+    order: 2;
+    /* Comes after nav on mobile */
+}
+
+.header h1:focus-visible {
+    outline: 3px solid #FFD700;
+    outline-offset: 4px;
+}
+
+/* ===== NAVIGATION - MOBILE OPTIMIZED ===== */
+.header nav {
+    display: flex;
+    flex-direction: column;
+    /* Stack vertically */
+    width: 100%;
+    /* Full width on mobile */
+    gap: 0.5rem;
+    /* Space between links */
+    order: 1;
+    /* Comes first on mobile */
+    margin-bottom: 0.5rem;
+}
+
+.header nav a {
+    display: block;
+    /* Full-width click area */
+    color: #000;
+    font-size: 1.1rem;
+    /* Readable on mobile */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 1rem;
+    /* Large touch target (44px min) */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    /* Pill shape */
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px dashed #000 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header nav a:hover,
+.header nav a:focus-visible {
+    background-color: #FFD700;
+    /* Gold/yellow */
+    color: #000;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    outline: 3px solid white;
+    outline-offset: 2px;
+    border: 3px solid #000;
+    transform: translateY(-2px);
+    /* Slight lift */
+    box-shadow: 2px 6px 9px rgba(0, 0, 0, 0.3);
+}
+
+.header nav a:active {
+    transform: translateY(0);
+    /* Press effect */
+}
+
+/* Specific Jamaican Colors for Links */
+.header nav a[routerLink="/"] {
+    background-color: #059605;
+    /* Green */
+    color: white;
+}
+
+.header nav a[routerLink="/wifi-access"] {
+    background-color: #FFD700;
+    /* Gold */
+    color: black;
+}
+
+.header nav a[routerLink="/donate"] {
+    background-color: #000000;
+    /* Black */
+    color: white;
+}
+
+/* Dashboard, Login, Logout */
+.header nav a[routerLink="/dashboard"],
+.header nav a[routerLink="/login"],
+.header nav a:not([routerLink]) {
+    /* For Logout (click) */
+    background-color: #059605;
+    /* Default to green if not specified */
+    color: white;
+}
+
+/* Keep Login Gold if it's there */
+.header nav a[routerLink="/login"] {
+    background-color: #FFD700;
+    color: black;
+}
+
+.header nav a:hover,
+.header nav a:focus-visible {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.4);
+    outline: 3px solid white;
+}
+
+/* Active route indicator */
+.header nav a.router-link-active {
+
+    color: white;
+    position: relative;
+}
+
+.header nav a.router-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+}
+
+/* ===== HAMBURGER MENU FOR MOBILE (Optional) ===== */
+.menu-toggle {
+    display: none;
+    /* Hidden by default */
+    background: none;
+    border: 2px solid white;
+    color: white;
+    font-size: 1.8rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    order: 0;
+    min-height: 44px;
+    /* Touch-friendly */
+    min-width: 44px;
+}
+
+/* ===== TABLET (768px and up) ===== */
+@media (min-width: 768px) {
+    .header {
+        flex-direction: row;
+        /* Horizontal layout */
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        align-items: center;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+        text-align: left;
+        width: auto;
+        /* Auto width on tablet */
+        order: 1;
+        /* First item */
+        flex: 0 0 auto;
+        margin-right: 2rem;
+    }
+
+    .header nav {
+        flex-direction: row;
+        /* Horizontal links */
+        width: auto;
+        order: 2;
+        margin-bottom: 0;
+        gap: 0.75rem;
+        background: none;
+    }
+
+    .header nav a {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        min-width: 100px;
+        /* Balanced button sizes */
+        text-align: center;
+    }
+
+    /* Hide menu toggle on tablet/desktop */
+    .menu-toggle {
+        display: none !important;
+    }
+}
+
+/* ===== DESKTOP (1024px and up) ===== */
+@media (min-width: 1024px) {
+    .header {
+        padding: 1.25rem 3rem;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header nav a {
+        padding: 0.875rem 1.5rem;
+        font-size: 1.1rem;
+        min-width: 120px;
+        margin: 0 0.25rem;
+    }
+
+    .header nav a:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* ===== LARGE DESKTOP (1200px and up) ===== */
+@media (min-width: 1200px) {
+    .header {
+        padding: 1.5rem 4rem;
+    }
+
+    .header h1 {
+        font-size: 2.8rem;
+    }
+
+    .header nav {
+        gap: 1.5rem;
+    }
+
+    .header nav a {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* ===== UTILITY FOR MAIN CONTENT ===== */
+.container {
+    width: 100%;
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1000px;
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* ===== RESPONSIVE IMAGES ===== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+button,
+a[role="button"],
+.header nav a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.toggle-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+    margin: 1rem 0;
+    order: 3;
+    /* Group them at the bottom on mobile */
+}
+
+.theme-toggle-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 50%;
+    border: 2px dashed #000 !important;
+    background: #059605;
+    /* Green for high visibility */
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle-btn.active {
+    background: #ff4d4d;
+    /* Red when voice navigation is active */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 77, 77, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+    }
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus-visible {
+    background: white;
+    color: #000;
+    transform: scale(1.1);
+    outline: 3px solid #FFD700;
+    outline-offset: 3px;
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    pointer-events: none;
+}
+
+.admin-login-link {
+    background-color: #000 !important;
+    color: #ffd700 !important;
+    /* Gold text */
+    padding: 8px 16px !important;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border: 1px dashed #ffd700 !important;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.admin-login-link:hover {
+    background-color: #333 !important;
+    color: #fff !important;
+}

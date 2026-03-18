@@ -1,0 +1,22 @@
+:host {
+    display: block;
+}
+
+.footer {
+    box-sizing: border-box;
+    text-align: center;
+    padding: 1.5rem;
+    background: black;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tablet/Desktop footer */
+@media (min-width: 768px) {
+    .footer {
+        padding: 2rem;
+    }
+}
