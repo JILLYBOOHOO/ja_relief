@@ -21,6 +21,10 @@
   align-items: center;
 }
 
+:host-context(.dark-theme) .breadcrumb-item {
+  color: #ddd;
+}
+
 .breadcrumb-item a {
   color: #009B3A;
   text-decoration: none;
@@ -40,8 +44,16 @@
   font-weight: bold;
 }
 
+:host-context(.dark-theme) .breadcrumb-item.active {
+  color: #fff;
+}
+
 .separator {
   color: #666;
   font-size: 0.8rem;
   margin-left: 10px;
+}
+
+:host-context(.dark-theme) .separator {
+  color: #aaa;
 }

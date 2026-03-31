@@ -743,3 +743,108 @@
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* =========================================
+   Mobile Responsiveness Overrides
+   ========================================= */
+@media (max-width: 768px) {
+    /* Main Containers */
+    .donate-page {
+        padding: 20px 10px;
+    }
+    
+    .donate-container {
+        padding: 25px 15px;
+        border-radius: 20px;
+    }
+    
+    .donate-container h1 {
+        font-size: 2.2rem;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+    }
+
+    /* Type Selection */
+    .donation-options {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .donation-options button {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 1.1rem;
+    }
+
+    /* Form Fields & Donor Info */
+    .top-donor-info {
+        padding: 20px 15px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Monetary Donation Fixes */
+    .amount-selector {
+        padding: 20px 15px;
+    }
+    
+    .quick-amounts {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .quick-amounts button {
+        padding: 12px 10px;
+        font-size: 1.2rem;
+    }
+
+    .payment-container {
+        padding: 15px;
+        border-radius: 12px;
+    }
+    
+    .security-badges {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* In-Kind Fixes */
+    .in-kind-sidebar {
+        position: relative;
+        top: 0;
+    }
+    
+    .category-card {
+        padding: 20px 15px;
+    }
+    
+    .item-checkbox {
+        padding: 12px 10px;
+        font-size: 0.95rem;
+    }
+    
+    .modal-content {
+        padding: 40px 20px;
+    }
+    
+    .modal-content h2 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quick-amounts {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .quick-amounts button {
+        font-size: 1.1rem;
+    }
+}
