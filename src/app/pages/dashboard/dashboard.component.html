@@ -1,0 +1,123 @@
+<section class="dashboard-wrapper">
+
+    <!-- VIRTUAL CARD FLIP -->
+    <div class="card-scene" (click)="flipCard()" title="Tap to reveal CVV">
+        <div class="card-3d" [class.is-flipped]="isCardFlipped">
+
+            <!-- FRONT FACE -->
+            <div class="card-face card-front">
+                <!-- Watermark image from assets -->
+                <img src="assets/jaheart.jpg" alt="JA Relief" class="card-watermark" />
+
+                <div class="vc-header">
+                    <span>JA RELIEF SURVIVOR ID</span>
+                    <!-- Tap-to-Pay (NFC) Icon -->
+                    <span class="nfc-icon" title="Tap to Pay">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20c4.418 0 8-3.582 8-8s-3.582-8-8-8" />
+                            <path d="M12 16c2.209 0 4-1.791 4-4s-1.791-4-4-4" />
+                            <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+                        </svg>
+                    </span>
+                </div>
+
+                <div class="vc-chip-row">
+                    <div class="vc-chip">
+                        <div class="chip-lines">
+                            <div class="chip-line"></div>
+                            <div class="chip-center">
+                                <div class="chip-left"></div>
+                                <div class="chip-right"></div>
+                            </div>
+                            <div class="chip-line"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vc-card-number">
+                    {{ cardNumber }}
+                </div>
+
+                <div class="vc-body">
+                    <div class="vc-info">
+                        <span class="vc-label">Card Holder</span>
+                        <h3>{{ currentUser?.name || 'Provisional User' }}</h3>
+                        <p>ID: <strong>{{ currentUser?.idNumber }}</strong></p>
+                    </div>
+                    <div class="vc-hint">
+                        <span>Tap card to view CVV</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BACK FACE -->
+            <div class="card-face card-back">
+                <div class="mag-stripe"></div>
+                <div class="cvv-row">
+                    <div class="cvv-box">
+                        <span class="cvv-label">CVV</span>
+                        <span class="cvv-value">{{ cvvCode }}</span>
+                    </div>
+                </div>
+                <p class="back-terms">
+                    Authorised merchants only: pharmacies, medical offices, hardware stores &amp; supermarkets.
+                </p>
+                <div class="vc-back-header">JA RELIEF SURVIVOR ID</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="card">
+            <h3>Wi-Fi Access Points</h3>
+            <p>Find the nearest available internet connection.</p>
+            <button class="action-btn secondary" routerLink="/wifi-access">Find Wi-Fi</button>
+        </div>
+
+        <div class="card">
+            <h3>Your Profile</h3>
+            <p>Review or update your submitted information.</p>
+            <button class="action-btn outline">Edit Profile</button>
+        </div>
+    </div>
+
+    <!-- PANTRY REQUEST SECTION -->
+    <div class="pantry-section">
+        <h2>Request from Pantry</h2>
+        <p>Select the items you need assistance with. Please only request what you immediately need.</p>
+
+        <form [formGroup]="pantryForm" (ngSubmit)="submitPantryRequest()" class="pantry-form">
+            <div class="form-group parish-group">
+                <label for="parish">Select your Parish:</label>
+                <select id="parish" formControlName="parish" class="parish-select">
+                    <option value="" disabled selected>-- Select Parish --</option>
+                    <option *ngFor="let parish of parishes" [value]="parish">{{ parish }}</option>
+                </select>
+            </div>
+
+            <div class="categorized-requests">
+                <div class="pantry-category" *ngFor="let cat of categorizedPantryItems">
+                    <h4><span class="category-icon">{{ cat.icon }}</span> {{ cat.category }}</h4>
+                    <div class="checkbox-grid">
+                        <label class="custom-checkbox" *ngFor="let item of cat.items">
+                            <input type="checkbox" [formControlName]="item.name" />
+                            <span class="checkmark"></span>
+                            <span class="pantry-icon">{{ item.icon }}</span> {{ item.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group other-items-group">
+                <label for="otherItems">Other / Item not listed:</label>
+                <textarea id="otherItems" formControlName="otherItems"
+                    placeholder="e.g. Specific medication, dietary requirements..." rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+    </div>
+
+</section>

@@ -1,0 +1,564 @@
+.dashboard-wrapper {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ===================== FLIP CARD ===================== */
+.card-scene {
+    width: 100%;
+    max-width: 440px;
+    height: 260px;
+    perspective: 1000px;
+    margin: 0 auto 3rem auto;
+    cursor: pointer;
+}
+
+.card-3d {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-3d.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* === FRONT === */
+.card-front {
+    background: linear-gradient(135deg, #093028 0%, #237A57 60%, #1a5c42 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.6rem;
+}
+
+.pantry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.parish-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 300px;
+}
+
+.parish-select {
+    padding: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: white;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* decorative circle overlay */
+.card-front::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 250px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.card-front::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -40px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Jamaica heart watermark on card */
+.card-watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+/* Pantry item icons */
+.pantry-icon {
+    font-size: 1.3rem;
+    margin-right: 0.4rem;
+    flex-shrink: 0;
+}
+
+.vc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* NFC / Tap-to-Pay icon */
+.nfc-icon {
+    display: flex;
+    align-items: center;
+    opacity: 0.85;
+    animation: nfc-pulse 2s ease-in-out infinite;
+}
+
+.nfc-icon svg {
+    width: 26px;
+    height: 26px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes nfc-pulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+}
+
+/* EMV Chip */
+.vc-chip-row {
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.vc-chip {
+    width: 48px;
+    height: 36px;
+    background: linear-gradient(135deg, #f0d060 0%, #c8960c 50%, #e8c840 100%);
+    border-radius: 6px;
+    border: 1px solid #a07800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.chip-lines {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3px 0;
+}
+
+.chip-line {
+    width: 100%;
+    height: 3px;
+    background: rgba(120, 80, 0, 0.35);
+}
+
+.chip-center {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6px;
+}
+
+.chip-left,
+.chip-right {
+    width: 3px;
+    height: 100%;
+    background: rgba(120, 80, 0, 0.35);
+}
+
+/* Card Number */
+.vc-card-number {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Bottom row */
+.vc-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 2;
+    position: relative;
+    margin-top: auto;
+}
+
+.vc-label {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.vc-info h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.15rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+}
+
+.vc-info p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: monospace;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.vc-hint {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+    font-style: italic;
+}
+
+/* === BACK === */
+.card-back {
+    background: linear-gradient(135deg, #0d1f1a 0%, #1a3d2d 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    transform: rotateY(180deg);
+}
+
+.mag-stripe {
+    width: 100%;
+    height: 48px;
+    background: #111;
+    margin-top: 2rem;
+    flex-shrink: 0;
+}
+
+.categorized-requests {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.pantry-category {
+    margin-bottom: 35px;
+}
+
+.pantry-category h4 {
+    font-size: 1.2rem;
+    color: #009B3A;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 8px;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.cvv-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.8rem 1.6rem;
+}
+
+.cvv-box {
+    background: #fff;
+    color: #111;
+    border-radius: 6px;
+    padding: 0.3rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 130px;
+}
+
+.cvv-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #555;
+    font-weight: 700;
+}
+
+.cvv-value {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #111;
+}
+
+.back-terms {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 0 1.6rem;
+    line-height: 1.4;
+    margin-top: auto;
+}
+
+.vc-back-header {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    padding: 0.5rem 1.6rem 0.8rem;
+    text-align: right;
+}
+
+/* ====================================================== */
+
+/* --- DASHBOARD QUICK LINKS --- */
+.dashboard-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: #222;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    min-height: 48px;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    border: 4px ridge #000;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+
+    white-space: nowrap;
+}
+
+.action-btn.primary {
+    background-color: #FFFF00; /* Brighter Yellow */
+    color: #000;
+}
+
+.action-btn.secondary {
+    background-color: #000;
+    color: #fff;
+    box-shadow: 4px 4px 0px #FFFF00;
+}
+
+
+.action-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 1);
+}
+
+.action-btn.outline {
+    background-color: transparent;
+    border: 2px solid #000;
+    color: #000;
+}
+
+
+/* --- PANTRY REQUEST SECTION --- */
+.pantry-section {
+    background-color: #fafbfc;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.pantry-section h2 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.pantry-section>p {
+    color: #555;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #333;
+    user-select: none;
+}
+
+.custom-checkbox input {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.other-items-group {
+    margin-bottom: 2rem;
+}
+
+.other-items-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.other-items-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.other-items-group textarea:focus {
+    outline: 2px solid #237A57;
+    border-color: #237A57;
+}
+
+.submit-btn {
+    background-color: #12a342;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0b7a2d;
+    box-shadow: 0 4px 12px rgba(18, 163, 66, 0.3);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+    .dashboard-wrapper {
+        margin: 1rem auto;
+        padding: 1rem;
+        border-radius: 0;
+    }
+    .card-scene {
+        height: 220px;
+        margin-bottom: 2rem;
+    }
+    .vc-card-number {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+    .dashboard-content {
+        grid-template-columns: 1fr;
+    }
+    .action-btn {
+        width: 100% !important;
+        max-width: none;
+    }
+    .pantry-section {
+        padding: 1rem;
+    }
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-wrapper {
+        padding: 0.75rem;
+    }
+    .vc-header {
+        font-size: 0.6rem;
+    }
+    .vc-info h3 {
+        font-size: 0.9rem;
+    }
+    .submit-btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}

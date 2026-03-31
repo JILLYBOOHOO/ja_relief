@@ -1,0 +1,16 @@
+<app-header></app-header>
+
+<main id="main">
+  <app-breadcrumb></app-breadcrumb>
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>
+
+<!-- Cookie Consent Banner -->
+<div class="cookie-banner" *ngIf="showCookieBanner">
+  <div class="cookie-content">
+    <p>We use cookies to improve your experience and ensure our platform runs securely. By continuing to use JA Relief, you agree to our use of cookies and our <a routerLink="/privacy" (click)="showCookieBanner=false">Privacy Statement</a>.</p>
+    <button class="cookie-btn" (click)="acceptCookies()">Accept & Continue</button>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<section class="admin-dashboard">
+    <div class="container">
+        <header class="admin-header">
+            <h2>Admin Dashboard - Disaster Alerts</h2>
+            <button (click)="logout()" class="logout-btn">Logout</button>
+        </header>
+
+        <!-- Weather Control Panel -->
+        <div class="card weather-controls">
+            <h3>🌩️ Weather Situation Control</h3>
+            <p>Select the current weather to update the global app animation state.</p>
+            <div class="weather-buttons">
+                <button (click)="setWeather('sunny')" [class.active]="currentWeather === 'sunny'" class="w-btn sunny">☀️
+                    Sunny</button>
+                <button (click)="setWeather('rainy')" [class.active]="currentWeather === 'rainy'"
+                    class="w-btn rainy">🌧️ Rainy</button>
+                <button (click)="setWeather('stormy')" [class.active]="currentWeather === 'stormy'"
+                    class="w-btn stormy">⛈️ Stormy</button>
+                <button (click)="setWeather('thunder')" [class.active]="currentWeather === 'thunder'"
+                    class="w-btn thunder">⚡ Thunder/Lightning</button>
+            </div>
+        </div>
+
+        <!-- Post New Update -->
+        <div class="card post-update">
+            <h3>📝 Post New Emergency Update</h3>
+            <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()">
+                <div class="form-group">
+                    <label>Alert Title</label>
+                    <input type="text" formControlName="title" placeholder="e.g. Flash Flood Warning">
+                </div>
+                <div class="form-group">
+                    <label>Source</label>
+                    <input type="text" formControlName="source" placeholder="e.g. ODPEM">
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea formControlName="content" rows="4" placeholder="Detailed alert information..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Alert Level</label>
+                    <select formControlName="status">
+                        <option value="info">Information (Blue)</option>
+                        <option value="warning">Warning (Yellow)</option>
+                        <option value="danger">Danger (Red)</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn" [disabled]="updateForm.invalid">Post Update</button>
+            </form>
+        </div>
+
+        <!-- Survivor Requests Management -->
+        <div class="card requests-management">
+            <h3>📋 Survivor Requests Management</h3>
+            <p>Monitor and manage requests from survivors across Jamaica.</p>
+            <div class="requests-table-wrapper">
+                <table class="requests-table">
+                    <thead>
+                        <tr>
+                            <th>Requester</th>
+                            <th>Location</th>
+                            <th>Items & Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let req of allRequests">
+                            <td><strong>{{ req.requesterName }}</strong></td>
+                            <td>{{ req.location }}</td>
+                            <td>
+                                <div *ngFor="let item of req.items" class="item-status-row">
+                                    <span class="item-name">{{ item.name }} ({{ item.quantity }})</span>
+                                    <span class="status-tag" [ngClass]="item.status">{{ item.status }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of req.items" class="action-row">
+                                    <button *ngIf="item.status === 'fulfilled'" (click)="markAsReceived(req, item)"
+                                        class="receive-btn">
+                                        Received: {{ item.name }}
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="allRequests.length === 0">
+                            <td colspan="4">No survivor requests found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Updates -->
+        <div class="card recent-updates">
+            <h3>📋 Recent Updates</h3>
+            <div class="update-list">
+                <div *ngFor="let update of updates" class="update-card" [ngClass]="update.status">
+                    <div class="update-header">
+                        <strong>{{ update.title }}</strong>
+                        <button (click)="deleteUpdate(update.id)" class="delete-btn">Delete</button>
+                    </div>
+                    <div class="update-meta">
+                        <span>{{ update.source }}</span> | <span>{{ update.time }}</span>
+                    </div>
+                </div>
+                <p *ngIf="updates.length === 0">No updates posted yet.</p>
+            </div>
+        </div>
+    </div>
+</section>

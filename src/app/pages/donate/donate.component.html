@@ -1,0 +1,164 @@
+<div class="donate-page">
+    <div class="donate-container" [class.wide-container]="donationType === 'in-kind'">
+        <h1>Make a Difference Today</h1>
+        <p class="subtitle">Support JA RELIEF in providing disaster assistance.</p>
+
+        <div class="donation-options">
+            <button [class.active]="donationType === 'monetary'" (click)="setDonationType('monetary')" aria-label="Make a monetary donation">
+                💰 Monetary Donation
+            </button>
+            <button [class.active]="donationType === 'in-kind'" (click)="setDonationType('in-kind')" aria-label="Donate items in kind">
+                📦 Donate Items
+            </button>
+        </div>
+
+        <div class="donor-info-section top-donor-info">
+            <h3>Step 1: Your Information</h3>
+            <div id="form-errors" class="error-message" style="color: #fa755a; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;"></div>
+            <div class="form-grid">
+                <div class="form-field">
+                    <label for="donor-name">Full Name *</label>
+                    <input id="donor-name" type="text" [(ngModel)]="donorName" placeholder="Enter Full Name" autocomplete="name" aria-required="true" />
+                </div>
+                <div class="form-field">
+                    <label for="donor-phone">Phone Number *</label>
+                    <input id="donor-phone" type="tel" [(ngModel)]="donorPhone" placeholder="876-000-0000" autocomplete="tel" aria-required="true" />
+                </div>
+                <div class="form-field">
+                    <label for="donor-email">Email Address *</label>
+                    <input id="donor-email" type="email" [(ngModel)]="donorEmail" placeholder="your@email.com" autocomplete="email" aria-required="true" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Monetary Donation Form -->
+        <div class="donation-form monetary-form" *ngIf="donationType === 'monetary'">
+            <div class="form-header">
+                <h2>Secure Checkout</h2>
+                <p>Supporting immediate disaster relief in Jamaica.</p>
+            </div>
+
+            <div class="amount-selector" role="region" aria-labelledby="amount-header">
+                <label id="amount-header">Step 2: Select Amount (JMD)</label>
+                <div class="quick-amounts" role="group" aria-labelledby="amount-header">
+                    <button *ngFor="let amt of [1000, 5000, 10000, 15000, 25000, 50000]" 
+                        (click)="setAmount(amt)" 
+                        [class.selected]="donationAmount === amt"
+                        [attr.aria-pressed]="donationAmount === amt"
+                        [attr.aria-label]="'Donate ' + (amt | number) + ' Jamaican Dollars'">
+                        ${{ amt | number }}
+                    </button>
+                </div>
+                <div class="input-group">
+                    <label for="custom-amount" class="visually-hidden">Or enter a custom amount</label>
+                    <span class="currency-symbol" aria-hidden="true">$</span>
+                    <input id="custom-amount" type="number" min="1" placeholder="Other Amount" [(ngModel)]="donationAmount" aria-label="Enter other donation amount in JMD" />
+                </div>
+            </div>
+
+            <div class="payment-methods-section">
+                <h3 id="payment-label">Step 3: Checkout with PayPal or Card</h3>
+                
+                <div class="payment-container paypal-container">
+                    <div id="paypal-button-container"></div>
+                </div>
+            </div>
+
+
+
+            <div class="security-badges">
+                <span>🔒 Secure 256-bit SSL encrypted</span>
+                <span>✅ PCI Compliant Gateway</span>
+            </div>
+        </div>
+
+        <div class="donation-form in-kind-form" *ngIf="donationType === 'in-kind'">
+            <div class="in-kind-layout">
+                <!-- Left Sidebar: High Priority Requests -->
+                <div class="in-kind-sidebar">
+                    <div class="survivor-requests-section" *ngIf="activeSurvivorRequests.length > 0">
+                        <h2>🚨 High Priority Requests</h2>
+                        <div class="requests-grid sidebar-requests">
+                            <div class="request-card" *ngFor="let req of activeSurvivorRequests">
+                                <div class="request-header">
+                                    <span class="requester">{{ req.requesterName }}</span>
+                                    <span class="location">📍 {{ req.location }}</span>
+                                </div>
+                                <div class="request-items">
+                                    <ng-container *ngFor="let item of req.items">
+                                        <div class="request-item" *ngIf="item.status === 'pending' || item.status === 'partially-fulfilled'">
+                                            <span class="item-name">{{ item.name }}</span>
+                                            <button class="pledge-btn" (click)="pledgeRequestItem(req, item)">Fulfill This</button>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Main Content: Categories -->
+                <div class="in-kind-main">
+                    <div class="form-header">
+                        <h2>Donate In Kind</h2>
+                        <p>Select the items you'd like to supply to our donation centers.</p>
+                    </div>
+                    
+                    <div class="categorized-items">
+                        <div class="category-card" *ngFor="let cat of categorizedItems">
+                            <div class="category-header">
+                                <h3><span class="category-icon">{{ cat.icon }}</span> {{ cat.category }}</h3>
+                            </div>
+                            <div class="items-grid">
+                                <label class="item-checkbox" *ngFor="let item of cat.items" 
+                                    tabindex="0" 
+                                    (keydown.enter)="$event.preventDefault(); item.checked = !item.checked"
+                                    (keydown.space)="$event.preventDefault(); item.checked = !item.checked">
+                                    <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked" tabindex="-1" [attr.aria-label]="'Pledge ' + item.name" />
+                                    <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
+                                    <span class="item-name">{{ item.name }}</span>
+                                </label>
+                            </div>
+                            <button class="pledge-btn category-pledge-btn" 
+                                    style="width: 100%; margin-top: 20px; font-size: 1.1rem; padding: 12px;" 
+                                    [disabled]="!hasCheckedItems(cat)" 
+                                    (click)="submitCategory(cat)">
+                                Pledge {{ cat.category }}
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="submit-btn primary-pledge-btn" (click)="submitInKind()">
+                        Confirm Total Pledge
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" *ngIf="showSuccessModal" (click)="closeModal()">
+        <div class="modal-content">
+            <div class="success-icon">🇯🇲</div>
+            <h2>Respect!</h2>
+            <p>Your contribution to JA RELIEF was successful. Together we are stronger!</p>
+            <div class="pledge-summary" *ngIf="pledgedItems.length > 0">
+                <p><strong>You pledged:</strong></p>
+                <ul>
+                    <li *ngFor="let item of pledgedItems">{{ item }}</li>
+                </ul>
+            </div>
+            <button class="close-btn" (click)="closeModal()">Done</button>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div class="modal-overlay" *ngIf="alertMessage" (click)="closeAlert()">
+        <div class="modal-content alert-modal" (click)="$event.stopPropagation()">
+            <div class="success-icon alert-icon" style="color: #fa755a;">⚠️</div>
+            <h2 style="color: #fa755a;">Action Required</h2>
+            <p>{{ alertMessage }}</p>
+            <button class="close-btn" (click)="closeAlert()">Got it</button>
+        </div>
+    </div>
+</div>
